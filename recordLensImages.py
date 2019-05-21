@@ -3,6 +3,9 @@ from picamera import PiCamera
 from opto import Opto
 import time
 import cv2
+import numpy as np
+
+fileDir = "imgs"
 
 # Initialize Camera
 camera = PiCamera()
@@ -23,6 +26,7 @@ for i in range(-290,291,5):
 	o.current(i)
 	time.sleep(0.5) # Allow for settling time of the tunable lens
 	fileName = fileDir + '\\' + str(i) + '.png'
+	image_avr = np.zeros((480, 640, 3))
 	for j in range(0,30):
 		camera.capture(rawCapture, format="bgr")
 		image = rawCapture.array
