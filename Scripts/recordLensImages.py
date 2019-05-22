@@ -25,7 +25,7 @@ time.sleep(0.5)
 for i in range(-290,291,5):
 	o.current(i)
 	time.sleep(0.5) # Allow for settling time of the tunable lens
-	fileName = fileDir + str(i)
+	fileName = fileDir + str(i) + ".png"
 	image_avr = np.zeros((480, 640, 3))
 	for j in range(0,30):
 		rawCapture = PiRGBArray(camera,size=(640,480))
@@ -33,5 +33,5 @@ for i in range(-290,291,5):
 		image = rawCapture.array
 		image_avr += image
 	image_avr = image_avr/30
-	cv2.imwrite(fileName + ".png",image)
-	cv2.imwrite(fileName+"_avr.png",image_avr)
+	cv2.imwrite(fileName,image)
+	cv2.imwrite("avr_"+fileName,image_avr)
