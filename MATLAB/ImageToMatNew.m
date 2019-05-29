@@ -4,9 +4,6 @@ close all, clear all
 
 % Folder and Image Variables
 folder = 'Trial1';
-lowerRange = -290;
-upperRange = 290;
-stepSize = 5;
 
 % Static Settings
 imageFolder = 'ImageSet';
@@ -17,7 +14,17 @@ imageDirectory = strcat('./',imageFolder,'/',folder,'/');
 nameList = [lowerRange:stepSize:upperRange];
 clear imageFolder;
 
-if isfolder(imageDirectory)    
+if isfolder(imageDirectory)
+    dinfo = dir(strcat(imageDirectory,'*',imageExtension));
+    isAvr = ~cellfun(@isempty, regexp({dinfo.name},'_avr'));
+    if length(isAvr) == length(~isAvr)
+        nameList_avr = {dinfo(isAvr).name};
+        nameList = {dinfo(~isAvr).name};
+        for i = 1:length(isAvr)
+            imageFile = strcat(imageDirectory,);
+        end
+    end
+%% Edited until here
     for i = 1:length(nameList)
         imageFile = strcat(imageDirectory,num2str(nameList(i)),imageExtension);
         imageFile_avr = strcat(imageDirectory,num2str(nameList(i)),'_avr',imageExtension);

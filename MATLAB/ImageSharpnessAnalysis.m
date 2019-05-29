@@ -1,7 +1,9 @@
 close all, clear all;
 
+% Script to analyse the FFT effects and sharpness measures of images
+
 % Load Image File (.mat file)
-imagefile = 'Trial1.mat';
+imagefile = 'Trial2.mat';
 load(imagefile)
 
 % Select which imageset to use (rawImage/avrImage)

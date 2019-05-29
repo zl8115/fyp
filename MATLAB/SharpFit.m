@@ -1,16 +1,22 @@
 close all, clear all;
 
+% This MATLAB script is supposed to attempt to fit the obtained sharpness
+% curve with the a rough approximation
+
+% Select trialSet to fit model approximation
+trialSet = "Trial1";
+
 % Load Sharpness Reference Data
 load('SharpData.mat');
-nameList = Trial1.nameList;
-sharp1 = Trial1.sharp1;
+eval(sprintf('nameList = %s.nameList',trialSet));
+eval(sprintf('sharp1 = %s.sharp1',trialSet));
 
 % Bell Curve/Gaussian Distribution Model
 f = @(x,mu,sigma) exp((-1/2)*((x-mu)/sigma).^2);
 
 % Define mu and sigma
 mu = nameList(sharp1 == max(sharp1));
-sigma = 20;
+sigma = 20; % Rough estimate
 
 % Define Observable Range
 x = [-292:1:292];

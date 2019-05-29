@@ -5,6 +5,13 @@ from picamera import PiCamera
 import time
 import cv2
 
+# New Lines
+from opto import Opto
+
+o = Opto(port='/dev/ttyACM0')
+o.connect()
+scan = False
+
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera(sensor_mode=7)
 camera.resolution = (640,480)
@@ -32,5 +39,23 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # if the 'q' key was pressed break from the loop
     if key == ord("q"):
         break
+    elif key == ord("s"):
+        scan = True
+        i = -290
+    elif key >= ord("a") and key <= ord("z"):
+        o.current(sign*(key - ord("a")+1)*10)
+    elif key == ord("0"):
+        o.current(0)
+    elif key == ord("-"):
+        sign = -1
+    elif key == ord("="):
+        sign = 1
+
+    if scan:
+        i += 10
+        if i > 290:
+            scan = False
+        else:
+            o.current(i)
 
 

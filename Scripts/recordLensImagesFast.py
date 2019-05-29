@@ -22,18 +22,18 @@ o.current(0)
 # Allow Camera to warmup
 time.sleep(0.5)
 
+rate = []
+tprev = time.time()
 # Loop Across all settings
 for i in range(-290,291,1):
 	o.current(i)
-	time.sleep(0.5) # Allow for settling time of the tunable lens
 	fileName = fileDir + str(i) + ".png"
 	fileNameAvr = fileDir + str(i) + "_avr.png"
-	image_avr = np.zeros((480, 640, 3))
-	for j in range(0,30):
-		rawCapture = PiRGBArray(camera,size=(640,480))
-		camera.capture(rawCapture, format="bgr")
-		image = rawCapture.array
-		image_avr += image
-	image_avr = image_avr/30
+	rawCapture = PiRGBArray(camera,size=(640,480))
+	camera.capture(rawCapture, format="bgr")
+	image = rawCapture.array
 	cv2.imwrite(fileName,image)
-	cv2.imwrite(fileNameAvr,image_avr)
+	tnow = time.time()
+	rate.append(tnow-tprev)
+	tprev = tnow
+print(np.mean(rate))
