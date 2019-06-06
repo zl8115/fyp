@@ -1,16 +1,18 @@
 close all, clear all
 
+% Converts obtained .png files to .mat cells
+
 % Folder and Image Variables
-folder = 'Trial1';
+folder = 'Trial3';
 lowerRange = -290;
 upperRange = 290;
-stepSize = 5;
+stepSize = 1;
 
 % Static Settings
 imageFolder = 'ImageSet';
 imageExtension = '.png';
 
-% 
+% Defines the imageDirectory and nameList
 imageDirectory = strcat('./',imageFolder,'/',folder,'/');
 nameList = [lowerRange:stepSize:upperRange];
 clear imageFolder;
@@ -22,7 +24,7 @@ if isfolder(imageDirectory)
         rawImage{i} = imread(imageFile);
         avrImage{i} = imread(imageFile_avr);
     end
-    save(folder,'rawImage','avrImage','nameList');
+    save(strcat('ImageMat',filesep,folder),'rawImage','avrImage','nameList');
     fprintf('Images Saved as %s.mat \n',folder);
 else
     fprintf('Error! Image Directory does not Exist! \n');

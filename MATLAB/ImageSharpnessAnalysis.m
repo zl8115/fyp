@@ -1,11 +1,14 @@
 close all, clear all;
 
+% Script to analyse the FFT effects and sharpness measures of images
+
 % Load Image File (.mat file)
-imagefile = 'Trial1.mat';
-load(imagefile)
+imagedir = 'ImageMat';
+imagefile = 'Speed4.mat';
+load(strcat(imagedir,filesep,imagefile))
 
 % Select which imageset to use (rawImage/avrImage)
-imageset = avrImage;
+imageset = rawImage;
 clear rawImage avrImage;
 
 % Sets the splicing range for Method 2 (1D FFT method)
