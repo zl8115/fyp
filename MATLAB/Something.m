@@ -1,6 +1,6 @@
 close all, clear all
 
-trialName = "Trial1";
+trialName = 'Trial1';
 
 load('SharpData.mat');
 eval(sprintf('sharp1 = %s.sharp1;',trialName));

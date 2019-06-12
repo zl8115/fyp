@@ -2,6 +2,7 @@ from picamera.array import PiRGBArray
 from picamera.array import PiYUVArray
 from picamera import PiCamera
 from opto import Opto
+import scipy.io
 import time
 import cv2
 import numpy as np
@@ -43,5 +44,4 @@ t3 = time.time()
 rgbImage = rgbCapture.array
 yuvImage = yuvCapture.array
 
-cv2.imwrite('RGB.png',rgbImage)
-cv2.imwrite('YUV.png',yuvImage)
+scipy.io.savemat('RGBYUV.mat',dict(RGB=rgbImage,YUV=yuvImage))

@@ -4,7 +4,7 @@ close all, clear all;
 
 % Load Image File (.mat file)
 imagedir = 'ImageMat';
-imagefile = 'Speed4.mat';
+imagefile = 'Trial1.mat';
 load(strcat(imagedir,filesep,imagefile))
 
 % Select which imageset to use (rawImage/avrImage)

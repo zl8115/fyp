@@ -2,7 +2,7 @@ close all, clear all
 
 load("SharpData.mat");
 
-comparisonSet = {Trial3,Speed3,Speed4};
+comparisonSet = {Trial1,Trial2,Trial3};
 
 clearvars -except comparisonSet;
 
@@ -34,3 +34,4 @@ getVarName(comparisonSet{1})
 
 function out = getVarName(var)
     out = inputname(1);
+end

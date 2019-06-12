@@ -27,5 +27,10 @@ B = mean(sharp1);
 
 % Figure Plot
 figure; hold on;
-plot(x,A*f(x,mu,sigma)+B);
 plot(nameList,sharp1);
+plot(x,A*f(x,mu,sigma)+B);
+grid on; grid minor;
+title('Measured and Fitted Sharpness Model Comparison')
+xlabel('Lens Current');
+ylabel('Image Sharpness (AU)');
+legend('Sharp1 Measure','Gauss Model')
