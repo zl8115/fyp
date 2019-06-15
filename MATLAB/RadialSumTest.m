@@ -4,18 +4,26 @@ close all, clear all;
 
 % Load Image File (.mat file)
 imagedir = 'ImageMat';
-imagefile = 'Trial3.mat';
+imagefile = 'Trial1.mat';
 load(strcat(imagedir,filesep,imagefile))
 
 % Select which imageset to use (rawImage/avrImage)
 imageset = rawImage;
 clear rawImage avrImage;
 
-for i = 300:10:500
-    image = rgb2gray(imageset{i});
-    test = abs(radsum(image));
-    plot(test/norm(test));
-    xlim([0 50]);
-    title(num2str(nameList(i)));
-    pause(0.5)
+maxIdx = 107;
+delta = 2;
+range = [maxIdx-(delta*5):delta:maxIdx];
+
+figure; hold on;
+grid on; grid minor;
+xlim([1 10]);
+for i = 1:length(range)
+    image = rgb2gray(imageset{range(i)});
+    test = abs(FFTradsum(image));
+    plot(test/norm(test));    
+    leg{i} = num2str(nameList(range(i)));
 end
+legend(leg)
+xlabel('Pixel Radius (q)');
+ylabel('Normalised Radial Sum');

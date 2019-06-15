@@ -15,9 +15,9 @@ maxIdx = find(sharp1 == max(sharp1));
 
 figure; hold on;
 
-for i = nameList([1,maxIdx,end])
+for k = nameList([1,maxIdx,end])
 
-    image = rgb2gray(imread(strcat(imgDir,num2str(i),'.png')));
+    image = rgb2gray(imread(strcat(imgDir,num2str(k),'.png')));
     Image = fftshift(fft2(image));    
 
     A = Image;

@@ -4,7 +4,7 @@ close all, clear all;
 
 % Load Image File (.mat file)
 imagedir = 'ImageMat';
-imagefile = 'Trial3.mat';
+imagefile = 'Trial1.mat';
 load(strcat(imagedir,filesep,imagefile))
 
 % Select which imageset to use (rawImage/avrImage)
@@ -29,36 +29,22 @@ for i = 1:length(imageset)
     
     % Method 1, absolute sum of 2D FFT
     tic;
-    Y = fft2(image);
-    sharp1(i) = sum(sum(abs(Y)));
-    %{
-    % Plot to show FFT2 spectrum
-    imshow(mat2gray(log(abs(fftshift(abs(Y)+1)))));
-    title(nameList(i));
-    pause(0.1);
-    %}
+    sharp1(i) = sharpmeasure(image,1);
     tSharp1(i) = toc;
     
     % Method 2, absolute sum of 1D FFT (spliced and concatenated image)
     tic
-    imageSplice = image(:,1:floor(size(image,2)/delta)*delta);
-    imageSplice = reshape(imageSplice,[length(imageSplice(:)),1]);
-    Y2 = fft(imageSplice);
-    sharp2(i) = sum(abs(Y2));
+    sharp2(i) = sharpmeasure(image,2);
     tSharp2(i) = toc;
     
     % Method 3, RadialSum of FFT
     tic
-    RadSum = radsum(image);
-    sharp3(i) = sum(abs(RadSum));
-    tSharp(i) = toc;
+    sharp3(i) = sharpmeasure(image,3);
+    tSharp3(i) = toc;
     
     % Method 4, Blur estimate using Variance of Laplacian
     tic
-    kernel1 = -1*ones(3);
-    kernel1(2,2) = 4;
-    lapImage = conv2(double(image), kernel1, 'same');
-    sharp4(i) = var(lapImage,[],'all');
+    sharp4(i) = sharpmeasure(image,4);
     tSharp4(i) = toc;
 end
 
@@ -101,7 +87,7 @@ grid minor;
 [V,I2] = max(sharp2);
 [V,I3] = max(sharp3);
 [V,I4] = max(sharp4);
-[V,min1] = min(sharp1);
+[V,min] = min(sharp4);
 
 % Plot of the highest Sharpness Image and its neighbors
 figure;
@@ -127,12 +113,12 @@ end
 figure;
 
 subplot(1,2,1)
-image = rgb2gray(imageset{min1});
+image = rgb2gray(imageset{min});
 imshow(mat2gray(log(abs(fftshift(abs(fft2(image))+1)))));
 title('Lowest Sharpness FFT2 Spectrum')
 
 subplot(1,2,2)
-image = rgb2gray(imageset{I1});
+image = rgb2gray(imageset{I4});
 imshow(mat2gray(log(abs(fftshift(abs(fft2(image))+1)))));
 title('Highest Sharpness FFT2 Spectrum')
 
@@ -140,5 +126,7 @@ title('Highest Sharpness FFT2 Spectrum')
 [~,TrialName,~] = fileparts(imagefile);
 eval(sprintf('%s.sharp1 = sharp1;',TrialName));
 eval(sprintf('%s.sharp2 = sharp2;',TrialName));
+eval(sprintf('%s.sharp3 = sharp3;',TrialName));
+eval(sprintf('%s.sharp4 = sharp4;',TrialName));
 eval(sprintf('%s.nameList = nameList;',TrialName));
 eval(sprintf("save('SharpData.mat','%s','-append');",TrialName))
