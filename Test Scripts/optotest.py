@@ -1,3 +1,5 @@
+# Script to test the functionality of the Opto library from https://github.com/OrganicIrratiation/opto
+
 from opto import Opto
 import numpy as np
 import time

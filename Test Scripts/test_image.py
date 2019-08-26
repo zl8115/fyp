@@ -1,3 +1,5 @@
+# Scripts that quickly captures an RGB image and shows it using OpenCV
+
 # Import the necessary packages
 from picamera.array import PiRGBArray
 from picamera import PiCamera
